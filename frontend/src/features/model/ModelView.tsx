@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { type ModelCard, sentimentApi } from '@/entities/sentiment'
+import { type ModelCard, sentimentEngine } from '@/entities/sentiment'
 import { useAsyncAction } from '@/shared/hooks/useAsyncAction'
 import { Alert, Button, Card, Skeleton } from '@/shared/ui'
 import { ConfusionMatrix } from './ConfusionMatrix'
@@ -8,7 +8,7 @@ import { PerClassTable } from './PerClassTable'
 import styles from './model.module.css'
 
 export function ModelView() {
-  const { run, data, error, isLoading } = useAsyncAction((signal) => sentimentApi.modelCard(signal))
+  const { run, data, error, isLoading } = useAsyncAction((signal) => sentimentEngine.modelCard(signal))
 
   useEffect(() => {
     void run()

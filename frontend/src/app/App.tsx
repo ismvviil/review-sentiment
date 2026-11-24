@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { sentimentEngine } from '@/entities/sentiment'
 import { useHashRoute } from '@/shared/hooks/useHashRoute'
 import { type ThemePreference, useTheme } from '@/shared/hooks/useTheme'
 import { type ApiStatus, useApiHealth } from './useApiHealth'
@@ -69,10 +70,12 @@ export function App() {
 
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
-          <span>React → REST /api/v1 → FastAPI → ReviewClassifier → MiniLM embeddings + scikit-learn</span>
-          <a href="/docs" target="_blank" rel="noreferrer">
-            API docs
-          </a>
+          <span>{sentimentEngine.description}</span>
+          {sentimentEngine.kind === 'api' && (
+            <a href="/docs" target="_blank" rel="noreferrer">
+              API docs
+            </a>
+          )}
         </div>
       </footer>
     </div>
@@ -80,12 +83,14 @@ export function App() {
 }
 
 function StatusPill({ status }: { status: ApiStatus }) {
+  const progress = useLoadProgress()
+  const inBrowser = sentimentEngine.kind === 'browser'
   const text =
     status.state === 'ready'
-      ? `Model ${status.health.model_version ?? ''}`
+      ? `Model ${status.health.model_version ?? ''}${inBrowser ? ' · in your browser' : ''}`
       : status.state === 'unavailable'
-        ? 'API unavailable'
-        : 'Connecting…'
+        ? inBrowser ? 'Model unavailable' : 'API unavailable'
+        : inBrowser ? `Loading model… ${Math.round(progress * 100)}%` : 'Connecting…'
   const title = status.state === 'unavailable' ? status.reason : text
 
   return (
@@ -94,4 +99,11 @@ function StatusPill({ status }: { status: ApiStatus }) {
       <span className={styles.statusText}>{text}</span>
     </span>
   )
+}
+
+/** Download progress of a locally executed model (browser engine only). */
+function useLoadProgress(): number {
+  const [progress, setProgress] = useState(0)
+  useEffect(() => sentimentEngine.onLoadProgress?.(setProgress), [])
+  return progress
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { sentimentApi } from '@/entities/sentiment'
+import { sentimentEngine } from '@/entities/sentiment'
 import { useAsyncAction } from '@/shared/hooks/useAsyncAction'
 import { Alert, Button, Card, EmptyState } from '@/shared/ui'
 import { BatchResultsTable } from './BatchResultsTable'
@@ -27,7 +27,7 @@ export function BatchView() {
   const tooMany = reviews.length > MAX_BATCH
 
   const { run, data, error, isLoading } = useAsyncAction((signal, items: string[]) =>
-    sentimentApi.classifyBatch(items, signal),
+    sentimentEngine.classifyBatch(items, signal),
   )
 
   return (

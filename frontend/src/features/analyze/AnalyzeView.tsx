@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { type Classification, sentimentApi } from '@/entities/sentiment'
+import { type Classification, sentimentEngine } from '@/entities/sentiment'
 import { useAsyncAction } from '@/shared/hooks/useAsyncAction'
 import { useDebouncedValue } from '@/shared/hooks/useDebouncedValue'
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage'
@@ -19,7 +19,7 @@ export function AnalyzeView() {
   const [history, setHistory] = useLocalStorage<Classification[]>('rs.history', [])
 
   const { run, data, error, isLoading } = useAsyncAction((signal, review: string) =>
-    sentimentApi.classify(review, signal),
+    sentimentEngine.classify(review, signal),
   )
 
   const classify = useCallback(

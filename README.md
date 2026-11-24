@@ -193,21 +193,31 @@ Production-like (after training): `docker compose up --build` → http://localho
 
 ---
 
-## Deploy online (free)
+## Deploy online
 
-The root `Dockerfile` builds **one container**: FastAPI serves the API *and* the React build on the same URL.
-Embeddings run on **ONNX Runtime** instead of PyTorch (`SENTIMENT_ENCODER_RUNTIME=onnx`): same vectors
-(verified: cosine 1.000000, identical predictions on 300 test reviews) with ~250 MB of RAM instead of ~800 MB,
-so it fits free 512 MB instances. Tested locally under a 512 MB limit: idle 235 MB, peak 312 MB with
-3 × 100-review batches.
+### GitHub Pages — free, no card (live version)
 
-**Render** (free plan, uses `render.yaml`):
-1. Push this repository to GitHub.
-2. render.com → **New → Blueprint** → select the repository → **Apply**.
-3. The first build takes ~5-10 min; the app is then at `https://review-sentiment-xxxx.onrender.com`.
+**https://ismvviil.github.io/review-sentiment/**
 
-Free instances sleep after 15 min without traffic; the next visit wakes them up in ~1 min.
-Every `git push` redeploys automatically. Any Docker host works the same way (it reads `$PORT`).
+The front end has a `SentimentEngine` port with two adapters, chosen at build time:
+
+| Engine | Used for | How it classifies |
+|---|---|---|
+| `api` (default) | development, Docker | `POST /api/v1/classifications` → FastAPI |
+| `browser` (`VITE_ENGINE=browser`) | GitHub Pages | same MiniLM in the browser (transformers.js, ONNX fp16) + the trained classifier exported to JSON |
+
+`python -m review_sentiment.ml.web_export --out frontend/public/model` exports the served scikit-learn model
+(and checks it reproduces `predict_proba`, max error ~3e-8). The fp16 browser model gives the **same predictions
+as PyTorch on 300/300 test reviews**. The workflow `.github/workflows/pages.yml` exports the latest model,
+builds and publishes on every push to `main` (one-time setup: Settings → Pages → Source: *GitHub Actions*).
+First visit downloads ~50 MB (model + runtime), then the browser caches it.
+
+### Docker host — full stack online (React → FastAPI)
+
+The root `Dockerfile` builds **one container** (FastAPI serves the API and the React build) with the ONNX
+encoder (`SENTIMENT_ENCODER_RUNTIME=onnx`): same vectors as PyTorch, ~250 MB of RAM instead of ~800 MB.
+Tested under a 512 MB limit: idle 235 MB, peak 312 MB with 3 × 100-review batches.
+`render.yaml` deploys it on Render (free plan, requires a card on file); any Docker host works (reads `$PORT`).
 
 Postman: import `backend/postman/ReviewClassifier.postman_collection.json`.
 

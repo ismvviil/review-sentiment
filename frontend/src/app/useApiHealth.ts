@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { type Health, sentimentApi } from '@/entities/sentiment'
+import { type Health, sentimentEngine } from '@/entities/sentiment'
 import { ApiError, isAbortError } from '@/shared/api/http'
 
 export type ApiStatus =
@@ -20,7 +20,7 @@ export function useApiHealth(): ApiStatus {
       controller.abort()
       controller = new AbortController()
       try {
-        const { data } = await sentimentApi.health(controller.signal)
+        const { data } = await sentimentEngine.health(controller.signal)
         setStatus({ state: 'ready', health: data })
       } catch (error) {
         if (isAbortError(error)) return
