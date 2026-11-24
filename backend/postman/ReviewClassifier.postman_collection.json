@@ -1,0 +1,62 @@
+{
+  "info": {
+    "name": "Review Sentiment Classifier API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [{ "key": "baseUrl", "value": "http://127.0.0.1:8000" }],
+  "item": [
+    {
+      "name": "Health (ready)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/health/ready" }
+    },
+    {
+      "name": "Model info",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/model" }
+    },
+    {
+      "name": "Classify - positive",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/v1/classifications",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"review\": \"Absolutely love this blender. Powerful, quiet and super easy to clean.\"\n}" }
+      }
+    },
+    {
+      "name": "Classify - neutral",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/v1/classifications",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"review\": \"It does the job. Nothing special, but fine for the price.\"\n}" }
+      }
+    },
+    {
+      "name": "Classify - negative",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/v1/classifications",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"review\": \"Stopped working after two weeks and customer support never replied.\"\n}" }
+      }
+    },
+    {
+      "name": "Classify - batch",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/v1/classifications/batch",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"reviews\": [\n    \"Great quality, fast shipping!\",\n    \"Average product, does what it says.\",\n    \"Broke after one use. Waste of money.\"\n  ]\n}" }
+      }
+    },
+    {
+      "name": "Classify - empty review (422 error)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/v1/classifications",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"review\": \"   \"\n}" }
+      }
+    }
+  ]
+}

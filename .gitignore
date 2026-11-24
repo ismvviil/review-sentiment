@@ -1,0 +1,22 @@
+# Python
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+backend/.env
+backend/.cache/
+backend/data/
+
+# Trained models are committed on purpose: the deployment image needs them (~44 KB each)
+
+
+# Front end
+frontend/node_modules/
+frontend/dist/
+
+# Local downloads
+.wheels/
+
+# Local verification data
+.verify/

@@ -1,0 +1,116 @@
+/*
+ * Design tokens - every color, space and radius the UI uses.
+ * Components reference roles (var(--ink-2)), never raw hex, so themes swap in one place.
+ *
+ * Sentiment colors form a diverging scale: red (negative) <-> gray (neutral) <-> blue (positive).
+ * Validated for color-vision deficiency in both themes; always paired with a label + symbol.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces & ink */
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --surface-2: #f3f2ee;
+  --surface-3: #ebeae4;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --line: #e1e0d9;
+  --line-strong: #c3c2b7;
+  --ring: rgba(11, 11, 11, 0.1);
+
+  /* Brand & interaction */
+  --accent: #6250d6;
+  --accent-soft: color-mix(in oklab, var(--accent) 12%, var(--surface));
+  --on-accent: #ffffff;
+  --primary: #0b0b0b;
+  --on-primary: #ffffff;
+
+  /* Data */
+  --sentiment-negative: #e34948;
+  --sentiment-neutral: #898781;
+  --sentiment-positive: #2a78d6;
+  --sequential: #6250d6;
+
+  /* Status (reserved, always with icon + label) */
+  --status-good: #006300;
+  --status-serious: #c2410c;
+  --status-critical: #d03b3b;
+
+  /* Shape & rhythm */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-8: 48px;
+
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'SF Mono', Consolas, monospace;
+
+  --shadow-1: 0 1px 2px rgba(11, 11, 11, 0.04), 0 1px 1px rgba(11, 11, 11, 0.03);
+  --shadow-2: 0 8px 24px -8px rgba(11, 11, 11, 0.12), 0 2px 6px rgba(11, 11, 11, 0.04);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme='light'])) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --surface-2: #232321;
+    --surface-3: #2c2c2a;
+    --ink: #f0efec;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --line: #2c2c2a;
+    --line-strong: #383835;
+    --ring: rgba(255, 255, 255, 0.1);
+    --accent: #9085e9;
+    --on-accent: #0b0b0b;
+    --primary: #f0efec;
+    --on-primary: #0b0b0b;
+    --sentiment-negative: #d03b3b;
+    --sentiment-neutral: #a8a69e;
+    --sentiment-positive: #3987e5;
+    --sequential: #9085e9;
+    --status-good: #0ca30c;
+    --status-serious: #ec835a;
+    --status-critical: #e66767;
+    --shadow-1: none;
+    --shadow-2: 0 8px 24px -8px rgba(0, 0, 0, 0.6);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --surface-2: #232321;
+  --surface-3: #2c2c2a;
+  --ink: #f0efec;
+  --ink-2: #c3c2b7;
+  --muted: #898781;
+  --line: #2c2c2a;
+  --line-strong: #383835;
+  --ring: rgba(255, 255, 255, 0.1);
+  --accent: #9085e9;
+  --on-accent: #0b0b0b;
+  --primary: #f0efec;
+  --on-primary: #0b0b0b;
+  --sentiment-negative: #d03b3b;
+  --sentiment-neutral: #a8a69e;
+  --sentiment-positive: #3987e5;
+  --sequential: #9085e9;
+  --status-good: #0ca30c;
+  --status-serious: #ec835a;
+  --status-critical: #e66767;
+  --shadow-1: none;
+  --shadow-2: 0 8px 24px -8px rgba(0, 0, 0, 0.6);
+}

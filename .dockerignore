@@ -1,0 +1,12 @@
+.venv/
+.wheels/
+**/__pycache__/
+**/*.egg-info/
+backend/.cache/
+backend/data/
+backend/tests/
+backend/.env
+frontend/node_modules/
+frontend/dist/
+.verify/
+.git/

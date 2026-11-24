@@ -1,0 +1,122 @@
+/* Badge */
+.badge {
+  --c: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 10px 0 4px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  background: color-mix(in oklab, var(--c) 14%, var(--surface));
+  border: 1px solid color-mix(in oklab, var(--c) 35%, transparent);
+  white-space: nowrap;
+}
+
+.symbol {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--c);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Score bars */
+.scores {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.scoreRow {
+  --c: var(--muted);
+  display: grid;
+  grid-template-columns: 92px 1fr 48px;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.scoreRow[data-top='true'] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.scoreLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--c);
+}
+
+.track {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--c);
+  transition: width 0.45s var(--ease);
+}
+
+.scoreValue {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Polarity spectrum */
+.spectrum {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.spectrumTrack {
+  position: relative;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--sentiment-negative),
+    var(--sentiment-neutral) 50%,
+    var(--sentiment-positive)
+  );
+  opacity: 0.9;
+}
+
+.spectrumMarker {
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  box-shadow: 0 0 0 2px var(--surface), var(--shadow-2);
+  transform: translate(-50%, -50%);
+  transition: left 0.5s var(--ease);
+}
+
+.spectrumAxis {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+}

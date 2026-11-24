@@ -1,0 +1,87 @@
+{
+  "name": "sentiment-classifier",
+  "version": "20261124-100102",
+  "created_at": "2026-11-24T10:01:02+00:00",
+  "classifier": "linear-svm",
+  "encoder": {
+    "type": "sentence-transformer",
+    "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+    "normalize": true,
+    "dimension": 384
+  },
+  "dataset": {
+    "name": "mteb/amazon_reviews_multi (en)",
+    "source": "https://huggingface.co/datasets/mteb/amazon_reviews_multi/resolve/main/en/train.jsonl",
+    "samples_per_class": 6000,
+    "label_mapping": "1-2 stars: negative, 3 stars: neutral, 4-5 stars: positive"
+  },
+  "labels": [
+    "negative",
+    "neutral",
+    "positive"
+  ],
+  "train_size": 14400,
+  "test_size": 3600,
+  "selection_metric": "f1",
+  "metrics": {
+    "logistic-regression": {
+      "train": {
+        "accuracy": 0.686,
+        "f1": 0.6843,
+        "precision": 0.6833,
+        "recall": 0.686
+      },
+      "test": {
+        "accuracy": 0.6733,
+        "f1": 0.6704,
+        "precision": 0.669,
+        "recall": 0.6733
+      }
+    },
+    "random-forest": {
+      "train": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "test": {
+        "accuracy": 0.6322,
+        "f1": 0.6274,
+        "precision": 0.626,
+        "recall": 0.6322
+      }
+    },
+    "linear-svm": {
+      "train": {
+        "accuracy": 0.689,
+        "f1": 0.6854,
+        "precision": 0.6847,
+        "recall": 0.689
+      },
+      "test": {
+        "accuracy": 0.6778,
+        "f1": 0.6723,
+        "precision": 0.6716,
+        "recall": 0.6778
+      }
+    }
+  },
+  "confusion_matrix": [
+    [
+      883,
+      248,
+      69
+    ],
+    [
+      336,
+      596,
+      268
+    ],
+    [
+      87,
+      152,
+      961
+    ]
+  ]
+}

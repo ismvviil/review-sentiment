@@ -1,0 +1,7 @@
+.cache/
+data/
+tests/
+postman/
+**/__pycache__/
+*.egg-info/
+.env

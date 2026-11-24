@@ -1,0 +1,33 @@
+# Training configuration - change the experiment here, not in the code.
+# Every "type" / "name" below is looked up in a plugin registry.
+
+model_name = "sentiment-classifier"
+
+[dataset]
+type = "amazon-reviews-multi"
+path = "data/raw/amazon_reviews_en_train.jsonl"   # relative to backend/
+samples_per_class = 6000                           # balanced subset, keeps training fast
+
+[split]
+test_size = 0.2
+seed = 42
+
+[encoder]
+type = "sentence-transformer"
+model_name = "sentence-transformers/all-MiniLM-L6-v2"
+batch_size = 64
+
+[selection]
+metric = "f1"          # the classifier with the best TEST score on this metric is kept
+
+[[classifiers]]
+name = "logistic-regression"
+params = { C = 1.0, max_iter = 2000 }
+
+[[classifiers]]
+name = "random-forest"
+params = { n_estimators = 300 }
+
+[[classifiers]]
+name = "linear-svm"
+params = { C = 0.5 }

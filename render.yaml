@@ -1,0 +1,16 @@
+# Render Blueprint: Dashboard -> New -> Blueprint -> select this repository.
+# Free plan: 512 MB RAM, sleeps after 15 min without traffic (first visit then takes ~1 min).
+services:
+  - type: web
+    name: review-sentiment
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health/ready
+    autoDeploy: true
+    envVars:
+      - key: ORT_THREADS        # the free instance has a fraction of one CPU
+        value: "1"
+      - key: SENTIMENT_LOG_LEVEL
+        value: INFO

@@ -1,0 +1,29 @@
+Model sentiment-classifier v20261124-100458
+Dataset : mteb/amazon_reviews_multi (en) (14400 train / 3600 test)
+Encoder : sentence-transformers/all-MiniLM-L6-v2 (384-d)
+=========================================================================
+Classifier            Set       Accuracy  Precision     Recall         F1
+-------------------------------------------------------------------------
+logistic-regression   train       0.6860     0.6833     0.6860     0.6843
+logistic-regression   test        0.6733     0.6690     0.6733     0.6704
+random-forest         train       1.0000     1.0000     1.0000     1.0000
+random-forest         test        0.6322     0.6260     0.6322     0.6274
+linear-svm            train       0.6890     0.6847     0.6890     0.6854
+linear-svm            test        0.6778     0.6716     0.6778     0.6723
+=========================================================================
+Selected: linear-svm (best test f1)
+
+              precision    recall  f1-score   support
+
+    negative     0.6761    0.7358    0.7047      1200
+     neutral     0.5984    0.4967    0.5428      1200
+    positive     0.7404    0.8008    0.7694      1200
+
+    accuracy                         0.6778      3600
+   macro avg     0.6716    0.6778    0.6723      3600
+weighted avg     0.6716    0.6778    0.6723      3600
+
+Confusion matrix (rows = true, columns = predicted) ['negative', 'neutral', 'positive']
+  [883, 248, 69]
+  [336, 596, 268]
+  [87, 152, 961]

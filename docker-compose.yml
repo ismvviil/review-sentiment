@@ -1,0 +1,17 @@
+# Production-like stack:  docker compose up --build   ->  http://localhost:8080
+# (train the model first: the API image ships the content of backend/artifacts/)
+services:
+  api:
+    build: ./backend
+    environment:
+      SENTIMENT_LOG_LEVEL: INFO
+    restart: unless-stopped
+
+  web:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
